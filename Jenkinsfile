@@ -20,7 +20,7 @@ node{
           sh 'ssh  ubuntu@172.31.7.201 docker rm dockernodewebapp || true'
           sh 'ssh  ubuntu@172.31.7.201 docker rmi -f  $(docker images -q) || true'
           sh "ssh  ubuntu@172.31.7.201 ${dockerRun}"
-          
+          sh "ssh ubuntu@172.31.7.201 curl -i localhost:49161"
         }
     }
     stage("Slack notification"){
