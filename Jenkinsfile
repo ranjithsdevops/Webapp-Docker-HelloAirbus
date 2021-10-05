@@ -17,14 +17,14 @@ node {
         slackSend channel: 'jenkins-notification', color: '#FFFF00', message: "DockerImage pushed to DockerHub", tokenCredentialId: 'slackCred'
     }
     stage("Final Deploy App as Docker Container in Server"){
-        def dockerRun = ' docker run  -d -p 49160:8080 --name dockernodewebapp ranjith8123/dockernodewebapp'
+        def dockerRun = ' docker run  -d -p 5000:8080 --name dockernodewebapp ranjith8123/dockernodewebapp'
         sshagent(['docker_new_ssh']) {
           sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.7.201 docker stop dockernodewebapp || true'
           sh 'ssh  ubuntu@172.31.7.201 docker rm dockernodewebapp || true'
           sh 'ssh  ubuntu@172.31.7.201 docker rmi -f  $(docker images -q) || true'
           sh "ssh  ubuntu@172.31.7.201 ${dockerRun}"
-          sh "ssh ubuntu@172.31.7.201 curl -i localhost:49160"
-          sh "ssh ubuntu@172.31.7.201 curl -o /dev/null -s -w "%{http_code}\n" http://localhost:49160"
+          sh "ssh ubuntu@172.31.7.201 curl -i localhost:5000"
+          sh 'ssh ubuntu@172.31.7.201 curl -o /dev/null -s -w "%{http_code}" http://localhost:5000'
         }
         slackSend channel: 'jenkins-notification', color: '#00FF00', message: "Curl Successful", tokenCredentialId: 'slackCred' 
     }
