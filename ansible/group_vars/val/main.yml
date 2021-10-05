@@ -1,0 +1,5 @@
+app_name: NodeWebApp
+region_name: Ohio
+instance_type: t2.large
+image_id: ami-0b9064170e32bde34
+keyname: Ranjith@1aa

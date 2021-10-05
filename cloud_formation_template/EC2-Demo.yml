@@ -5,15 +5,16 @@ Resources:
   Ec2Instance:
     Type: "AWS::EC2::Instance"
     Properties:
-      InstanceType: t2.micro
-      ImageId: ami-0b9064170e32bde34
+      InstanceType: ${InstanceType}
+      ImageId: ${ImageId}
       SecurityGroupIds:
         - !Ref MySecGrp1
-      KeyName: Ranjith@1aa
+      KeyName: ${keyname}
 
   MySecGrp1:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
+      GroupName: ${AWS::StackName}
       GroupDescription: Open ports 22 for ssh. 80 for http
       SecurityGroupIngress:
         - IpProtocol: tcp
