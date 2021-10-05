@@ -24,6 +24,7 @@ node {
           sh 'ssh  ubuntu@172.31.7.201 docker rmi -f  $(docker images -q) || true'
           sh "ssh  ubuntu@172.31.7.201 ${dockerRun}"
           sh "ssh ubuntu@172.31.7.201 curl -i localhost:49160"
+          sh "ssh ubuntu@172.31.7.201 curl -o /dev/null -s -w "%{http_code}\n" http://localhost:49160"
         }
         slackSend channel: 'jenkins-notification', color: '#00FF00', message: "Curl Successful", tokenCredentialId: 'slackCred' 
     }
